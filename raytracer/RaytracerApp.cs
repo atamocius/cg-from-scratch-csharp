@@ -13,12 +13,12 @@ namespace raytracer
 
         private readonly ICanvas canvas;
 
-        public RaytracerApp(uint renderWidth, uint renderHeight)
+        public RaytracerApp(ICanvas canvas)
         {
-            this.RenderSize = (renderWidth, renderHeight);
-            this.ClearColor = Color.Black;
+            this.canvas = canvas;
 
-            this.canvas = new Canvas(renderWidth, renderHeight);
+            this.RenderSize = canvas.Size;
+            this.ClearColor = Color.Black;
         }
 
         public void Start(RenderWindow window)

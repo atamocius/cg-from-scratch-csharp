@@ -6,7 +6,9 @@ namespace raytracer
     {
         static void Main(string[] args)
         {
-            var app = new RaytracerApp(320, 240);
+            var canvas = new Canvas(320, 240);
+
+            var app = new RaytracerApp(canvas);
 
             var window = new AppWindow(
                 "Raytracer",
