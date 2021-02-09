@@ -7,7 +7,7 @@ namespace raytracer
 {
     public class Scene
     {
-        private const float VIEWPORT_SIZE = 1;
+        private static readonly Vector2f VIEWPORT_SIZE = new Vector2f(1, 1);
         private const float PROJECTION_PLANE_Z = 1;
         private static readonly Vector3f CAMERA_POSITION =
             new Vector3f(0, 0, 0);
@@ -73,8 +73,8 @@ namespace raytracer
         private Vector3f CanvasToViewport(in Vector2i canvasPos)
         {
             return new Vector3f(
-                canvasPos.X * VIEWPORT_SIZE / this.canvas.Size.Width,
-                canvasPos.Y * VIEWPORT_SIZE / this.canvas.Size.Height,
+                canvasPos.X * VIEWPORT_SIZE.X / this.canvas.Size.Width,
+                canvasPos.Y * VIEWPORT_SIZE.Y / this.canvas.Size.Height,
                 PROJECTION_PLANE_Z);
         }
 
@@ -128,12 +128,12 @@ namespace raytracer
             in Vector3f direction,
             in Sphere sphere)
         {
-            var oc = origin - sphere.Center;
+            var co = origin - sphere.Center;
 
             var k1 = MathHelper.DotProduct(direction, direction);
-            var k2 = 2 * MathHelper.DotProduct(oc, direction);
+            var k2 = 2 * MathHelper.DotProduct(co, direction);
             var k3 =
-                MathHelper.DotProduct(oc, oc) - sphere.Radius * sphere.Radius;
+                MathHelper.DotProduct(co, co) - sphere.Radius * sphere.Radius;
 
             var discriminant = k2 * k2 - 4 * k1 * k3;
             if (discriminant < 0)
