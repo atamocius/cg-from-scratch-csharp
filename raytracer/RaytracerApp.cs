@@ -1,8 +1,6 @@
 using SFML.Window;
 using SFML.Graphics;
-using SFML.System;
 using Atamocius.Core;
-using System;
 
 namespace raytracer
 {
