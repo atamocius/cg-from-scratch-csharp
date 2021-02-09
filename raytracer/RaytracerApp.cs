@@ -25,6 +25,10 @@ namespace raytracer
 
         public void Start(RenderWindow window)
         {
+            // Trace the scene only once
+            this.canvas.Clear(Color.Black);
+            this.scene.Trace();
+            this.canvas.Update();
         }
 
         public void ProcessInput(RenderWindow window)
@@ -41,10 +45,6 @@ namespace raytracer
 
         public void Render(RenderTarget ctx)
         {
-            this.canvas.Clear(Color.Black);
-
-            this.scene.Trace();
-
             this.canvas.Present(ctx);
         }
     }

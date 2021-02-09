@@ -52,10 +52,13 @@ namespace Atamocius.Core
             this.colorBuffer[i + 3] = 255;
         }
 
-        public void Present(RenderTarget ctx)
+        public void Update()
         {
             this.backbuffer.Update(this.colorBuffer);
+        }
 
+        public void Present(RenderTarget ctx)
+        {
             ctx.Draw(this.backbufferSprite);
         }
     }

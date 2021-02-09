@@ -42,12 +42,16 @@ namespace Atamocius.Core
             uint targetFPS,
             float idleThreshold)
         {
+            Action<float> drawFPSCounter = this.BuildFPSCounter(window);
+
             var clock = new Clock();
             Func<float> getCurrentTime = () => clock.ElapsedTime.AsSeconds();
 
             var secsPerUpdate = 1f / (float)targetFPS;
             var current = 0f;
             var elapsed = 0f;
+
+            var fps = 0f;
 
             var previous = getCurrentTime();
             var lag = 0f;
@@ -61,6 +65,8 @@ namespace Atamocius.Core
                 current = getCurrentTime();
                 elapsed = current - previous;
                 previous = current;
+
+                fps = 1 / elapsed;
 
                 if (elapsed > idleThreshold)
                 {
@@ -81,8 +87,27 @@ namespace Atamocius.Core
 
                 this.app.Render(window);
 
+                drawFPSCounter(fps);
+
                 window.Display();
             }
+        }
+
+        private Action<float> BuildFPSCounter(RenderWindow window)
+        {
+            var text = new Text
+            {
+                Font = new Font("assets/fonts/JetBrainsMono-Regular_0.ttf"),
+                CharacterSize = 20,
+                Position = new Vector2f(6, 2),
+                FillColor = Color.Black,
+            };
+
+            return (f) =>
+            {
+                text.DisplayedString = f.ToString("0");
+                window.Draw(text);
+            };
         }
 
         private void ScaleWindowContents(RenderWindow window, VideoMode mode)
