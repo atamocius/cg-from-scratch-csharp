@@ -4,13 +4,13 @@ namespace Atamocius.Core
 {
     public class Canvas : ICanvas
     {
-        public (uint Width, uint Height) Size { get; }
+        public (ushort Width, ushort Height) Size { get; }
 
         private readonly byte[] colorBuffer;
         private readonly Sprite backbufferSprite;
         private readonly Texture backbuffer;
 
-        public Canvas(uint renderWidth, uint renderHeight)
+        public Canvas(ushort renderWidth, ushort renderHeight)
         {
             this.Size = (renderWidth, renderHeight);
 
@@ -35,7 +35,16 @@ namespace Atamocius.Core
 
         public void PutPixel(in int x, in int y, in Color color)
         {
-            var i = (x + y * this.Size.Width) * 4;
+            var cx = this.Size.Width / 2 + x;
+            var cy = this.Size.Height / 2 - y - 1;
+
+            if (cx < 0 || cx >= this.Size.Width ||
+                cy < 0 || cy >= this.Size.Height)
+            {
+                return;
+            }
+
+            var i = (cx + cy * this.Size.Width) * 4;
 
             this.colorBuffer[i] = color.R;
             this.colorBuffer[i + 1] = color.G;

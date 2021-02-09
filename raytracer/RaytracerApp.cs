@@ -1,8 +1,8 @@
-using System;
 using SFML.Window;
 using SFML.Graphics;
 using SFML.System;
 using Atamocius.Core;
+using System;
 
 namespace raytracer
 {
@@ -13,12 +13,16 @@ namespace raytracer
 
         private readonly ICanvas canvas;
 
+        private readonly Scene scene;
+
         public RaytracerApp(ICanvas canvas)
         {
             this.canvas = canvas;
 
             this.RenderSize = canvas.Size;
             this.ClearColor = Color.Black;
+
+            this.scene = new Scene(canvas);
         }
 
         public void Start(RenderWindow window)
@@ -39,12 +43,10 @@ namespace raytracer
 
         public void Render(RenderTarget ctx)
         {
-            this.canvas.Clear(Color.Cyan);
-            this.canvas.PutPixel(159, 119, Color.Red);
-            this.canvas.PutPixel(161, 119, Color.Red);
-            this.canvas.PutPixel(160, 120, Color.Red);
-            this.canvas.PutPixel(159, 121, Color.Red);
-            this.canvas.PutPixel(161, 121, Color.Red);
+            this.canvas.Clear(Color.Black);
+
+            this.scene.Trace();
+
             this.canvas.Present(ctx);
         }
     }
