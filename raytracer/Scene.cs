@@ -7,31 +7,30 @@ namespace raytracer
 {
     public class Scene
     {
-        private static readonly Vector2f VIEWPORT_SIZE = new Vector2f(1, 1);
+        private static readonly Vector2f VIEWPORT_SIZE = new(1, 1);
         private const float PROJECTION_PLANE_Z = 1;
-        private static readonly Vector3f CAMERA_POSITION =
-            new Vector3f(0, 0, 0);
+        private static readonly Vector3f CAMERA_POSITION = new(0, 0, 0);
         private static readonly Color BACKGROUND_COLOR = Color.White;
-        private static readonly Sphere[] SPHERES = new[]
+        private static readonly Sphere[] SPHERES =
         {
             new Sphere
-            (
-                center: new Vector3f(0, -1, 3),
-                radius: 1,
-                color: Color.Red
-            ),
+            {
+                Center = new (0, -1, 3),
+                Radius = 1,
+                Color = Color.Red
+            },
             new Sphere
-            (
-                center: new Vector3f(2, 0, 4),
-                radius: 1,
-                color: Color.Blue
-            ),
+            {
+                Center = new (2, 0, 4),
+                Radius = 1,
+                Color = Color.Blue
+            },
             new Sphere
-            (
-                center: new Vector3f(-2, 0, 4),
-                radius: 1,
-                color: Color.Green
-            ),
+            {
+                Center = new (-2, 0, 4),
+                Radius = 1,
+                Color = Color.Green
+            },
         };
 
         private readonly ICanvas canvas;
@@ -52,7 +51,7 @@ namespace raytracer
             {
                 for (int y = minY; y < maxY; y++)
                 {
-                    var direction = this.CanvasToViewport(new Vector2i(x, y));
+                    var direction = this.CanvasToViewport(new(x, y));
 
                     var color = TraceRay(
                         CAMERA_POSITION,
@@ -70,13 +69,11 @@ namespace raytracer
         /// <summary>
         /// Converts 2D canvas coordinates to 3D viewport coordinates.
         /// </summary>
-        private Vector3f CanvasToViewport(in Vector2i canvasPos)
-        {
-            return new Vector3f(
+        private Vector3f CanvasToViewport(in Vector2i canvasPos) =>
+             new(
                 canvasPos.X * VIEWPORT_SIZE.X / this.canvas.Size.Width,
                 canvasPos.Y * VIEWPORT_SIZE.Y / this.canvas.Size.Height,
                 PROJECTION_PLANE_Z);
-        }
 
         /// <summary>
         /// Traces a ray against the set of spheres in the scene.
@@ -138,15 +135,13 @@ namespace raytracer
             var discriminant = k2 * k2 - 4 * k1 * k3;
             if (discriminant < 0)
             {
-                return new Vector2f(
-                    float.PositiveInfinity,
-                    float.PositiveInfinity);
+                return new(float.PositiveInfinity, float.PositiveInfinity);
             }
 
             var t1 = (-k2 + MathF.Sqrt(discriminant)) / (2 * k1);
             var t2 = (-k2 - MathF.Sqrt(discriminant)) / (2 * k1);
 
-            return new Vector2f(t1, t2);
+            return new(t1, t2);
         }
     }
 }

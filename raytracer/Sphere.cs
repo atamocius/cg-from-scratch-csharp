@@ -5,15 +5,8 @@ namespace raytracer
 {
     public readonly struct Sphere
     {
-        public Vector3f Center { get; }
-        public float Radius { get; }
-        public Color Color { get; }
-
-        public Sphere(Vector3f center, float radius, Color color)
-        {
-            this.Center = center;
-            this.Radius = radius;
-            this.Color = color;
-        }
+        public Vector3f Center { get; init; }
+        public float Radius { get; init; }
+        public Color Color { get; init; }
     }
 }

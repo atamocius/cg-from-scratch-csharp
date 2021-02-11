@@ -2,9 +2,9 @@
 
 namespace raytracer
 {
-    class Program
+    public class Program
     {
-        static void Main(string[] args)
+        public static void Main(string[] args)
         {
             var canvas = new Canvas(600, 600);
 
